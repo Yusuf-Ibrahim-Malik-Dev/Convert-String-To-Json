@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Escape Converter (Ultimate Version)</title>
+    <link rel="stylesheet" href="assets/css/all.min.css" />
+
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --success-text: #065f46;
+            --error: #ef4444;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --info: #06b6d4;
+            --info-bg: #ecfeff;
+            --info-text: #155e75;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            --radius: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0b1329;
+            --bg-card: #1c2541;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --primary: #60a5fa;
+            --primary-hover: #3b82f6;
+            --success: #34d399;
+            --success-bg: #064e3b;
+            --success-text: #a7f3d0;
+            --error: #f87171;
+            --error-bg: #7f1d1d;
+            --error-text: #fca5a5;
+            --info: #22d3ee;
+            --info-bg: #164e63;
+            --info-text: #cffafe;
+            --shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .header-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: #f59e0b;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+            .theme-toggle:hover {
+                transform: scale(1.05);
+            }
+
+        .example-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+            .example-box h4 {
+                color: var(--text-main);
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .example-box pre {
+                background: var(--bg-primary);
+                padding: 12px 16px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                overflow-x: auto;
+                font-size: 13px;
+                font-family: 'Consolas', 'Fira Code', monospace;
+                color: var(--text-main);
+                line-height: 1.5;
+            }
+
+        .help-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .area-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+            .area-panel h3 {
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: var(--text-muted);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+        textarea {
+            width: 100%;
+            height: 520px;
+            resize: vertical;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 18px;
+            font-size: 14px;
+            font-family: 'Consolas', 'Fira Code', monospace;
+            outline: none;
+            background: var(--bg-card);
+            color: var(--text-main);
+            line-height: 1.6;
+            box-shadow: var(--shadow);
+        }
+
+            textarea:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+            button:hover {
+                transform: translateY(-2px);
+            }
+
+            button:active {
+                transform: translateY(0);
+            }
+
+        .btn-convert {
+            background: #2563eb;
+        }
+
+            .btn-convert:hover {
+                background: #1d4ed8;
+                box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+            }
+
+        .btn-format {
+            background: #10b981;
+        }
+
+            .btn-format:hover {
+                background: #059669;
+                box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
+            }
+
+        .btn-minify {
+            background: #06b6d4;
+        }
+
+            .btn-minify:hover {
+                background: #0891b2;
+                box-shadow: 0 6px 15px rgba(6, 182, 212, 0.3);
+            }
+
+        .btn-copy {
+            background: #8b5cf6;
+        }
+
+            .btn-copy:hover {
+                background: #7c3aed;
+                box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3);
+            }
+
+        .btn-clear {
+            background: #ef4444;
+        }
+
+            .btn-clear:hover {
+                background: #dc2626;
+                box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3);
+            }
+
+        .status {
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+            .status.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .success {
+            color: var(--success-text);
+            background: var(--success-bg);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .error {
+            color: var(--error-text);
+            background: var(--error-bg);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .info {
+            color: var(--info-text);
+            background: var(--info-bg);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        @media (max-width: 992px) {
+            .area {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            textarea {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* KONDISI KETIKA BADAI AKTIF (Berubah Mendung Gelap) */
+        body.yusuf-storm-active {
+            background: #05070a;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* =======================================
+        ROOT_NAMA CLASS_YUSUF STYLING
+        ======================================= */
+        .yusuf-footer {
+            background-color: #0c1622;
+            /* Footer cerah */
+            padding: 40px 0;
+            width: 100%;
+            border-top: 2px solid #1b263b;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            transition: background-color 0.8s ease, border-color 0.8s ease;
+        }
+
+        body.yusuf-storm-active .yusuf-footer {
+            background-color: #020304;
+            /* Footer saat badai */
+            border-top-color: #11141a;
+        }
+
+        .yusuf-footer-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 12;
+        }
+
+        .yusuf-copyright-text {
+            color: #8da9c4;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: color 0.8s ease;
+        }
+
+        body.yusuf-storm-active .yusuf-copyright-text {
+            color: #5f6470;
+        }
+
+        .yusuf-storm-trigger {
+            color: #e0e1dd;
+            /* Warna text awal saat cerah */
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            transition: color 0.4s ease, text-shadow 0.4s ease;
+            display: inline-block;
+        }
+
+            .yusuf-storm-trigger:hover {
+                color: #00fff2;
+            }
+
+        /* EFEK KILATAN FLASH DI TANAH */
+        .yusuf-ground-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(0, 255, 242, 0.4) 0%, transparent 70%);
+            opacity: 0;
+            z-index: 11;
+            pointer-events: none;
+        }
+
+            .yusuf-ground-flash.flash-active {
+                animation: flashGround 0.25s ease-out forwards;
+            }
+
+        @keyframes flashGround {
+
+            0%, 100% {
+                opacity: 0;
+            }
+
+            20%, 60% {
+                opacity: 1;
+            }
+        }
+
+        /* RETAKAN TANAH */
+        .yusuf-ground-cracks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #00fff2;
+            opacity: 0;
+            z-index: 11;
+            pointer-events: none;
+            filter: blur(0.5px) drop-shadow(0 0 8px #00fff2);
+            clip-path: polygon(45% 0%, 47% 15%, 43% 30%, 48% 50%, 42% 70%, 46% 100%, 45% 100%, 41% 72%, 46% 51%, 41% 32%, 45% 16%, 44% 0%,
+            /* Cabang Kiri */
+            43% 30%, 35% 45%, 38% 65%, 30% 85%, 31% 85%, 39% 64%, 36% 46%,
+            /* Cabang Kanan */
+            48% 50%, 58% 65%, 54% 85%, 65% 100%, 64% 100%, 53% 86%, 57% 66%);
+        }
+
+            .yusuf-ground-cracks.cracks-active {
+                animation: crackGlow 0.4s ease-out forwards;
+            }
+
+        @keyframes crackGlow {
+            0% {
+                opacity: 0;
+                filter: brightness(0.5) blur(1px);
+            }
+
+            15%, 45% {
+                opacity: 1;
+                filter: brightness(2) blur(0px);
+            }
+
+            100% {
+                opacity: 0;
+                filter: brightness(0.2) blur(2px);
+            }
+        }
+
+        /* =======================================
+        WADAH ANIMASI BADAI (HIDDEN BY DEFAULT)
+        ======================================= */
+        .yusuf-storm-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+            .yusuf-storm-wrapper.active {
+                opacity: 1;
+            }
+
+            .yusuf-storm-wrapper.ambient-flash {
+                animation: skyFlash 0.3s ease-out;
+            }
+
+        @keyframes skyFlash {
+
+            0%, 100% {
+                background-color: transparent;
+            }
+
+            25%, 65% {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* AWAN BERJALAN */
+        .yusuf-cloud-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .yusuf-cloud-layer {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: repeat-x url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M10 80 C 20 60, 40 60, 50 70 C 60 50, 80 50, 90 75 C 95 65, 105 70, 100 85 Z' fill='%23181d26' opacity='0.85'/%3E%3C/svg%3E");
+            background-size: 300px 150px;
+            filter: blur(8px);
+        }
+
+        .yusuf-cloud-1 {
+            top: -20px;
+            animation: moveClouds 40s linear infinite;
+        }
+
+        .yusuf-cloud-2 {
+            top: 10px;
+            background-size: 450px 200px;
+            opacity: 0.6;
+            animation: moveClouds 25s linear infinite reverse;
+        }
+
+        @keyframes moveClouds {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* HUJAN */
+        .yusuf-rain-container {
+            position: absolute;
+            top: 120px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .yusuf-drop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(0, 255, 242, 0.4));
+            width: 1.2px;
+            height: 30px;
+            animation: fall 0.6s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(15deg);
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(15deg);
+            }
+        }
+
+        /* CANVAS PETIR */
+        .yusuf-lightning-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* EFEK GEMPA */
+        .shake-body {
+            animation: hardShake 0.15s linear 2;
+        }
+
+        @keyframes hardShake {
+            0% {
+                transform: translate(2px, 1px) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-2px, -3px) rotate(-0.1deg);
+            }
+
+            100% {
+                transform: translate(1px, 2px) rotate(0.1deg);
+            }
+        }
+
+        /* --- CLASS CUSTOM --- */
+        .root_nama {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: inline-block;
+            z-index: 1000;
+        }
+
+        .clas_yusuf {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            z-index: 1010;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4);
+        }
+
+            .clas_yusuf:active {
+                transform: scale(0.95);
+            }
+
+        /* --- CONTAINER HUJAN UANG FULL SCREEN --- */
+        #moneyRainContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+            display: none;
+        }
+
+        .money-item {
+            position: absolute;
+            top: -50px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .bill-animation {
+            animation: fallAndWave 3.5s ease-in-out infinite;
+        }
+
+        .coin-animation {
+            animation: fallAndSpinCoin 2.8s linear infinite;
+        }
+
+        @keyframes fallAndWave {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            25% {
+                transform: translateY(25vh) translateX(25px) rotate(12deg);
+            }
+
+            50% {
+                transform: translateY(50vh) translateX(-25px) rotate(-12deg);
+            }
+
+            75% {
+                transform: translateY(75vh) translateX(15px) rotate(8deg);
+            }
+
+            100% {
+                transform: translateY(105vh) translateX(-5px) rotate(0deg);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes fallAndSpinCoin {
+            0% {
+                transform: translateY(0) rotateY(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(105vh) rotateY(540deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* --- SCENE UTAMA (Awan, Matahari, Canvas) --- */
+        #skyScene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 996;
+            display: none;
+        }
+
+        .fancy-cloud {
+            position: absolute;
+            top: 2.5rem;
+            left: 2.5rem;
+            width: 160px;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.1));
+            animation: floatCloud 4s ease-in-out infinite alternate;
+            z-index: 998;
+        }
+
+            .fancy-cloud::before,
+            .fancy-cloud::after {
+                content: '';
+                position: absolute;
+                background: inherit;
+                border-radius: 50%;
+            }
+
+            .fancy-cloud::before {
+                width: 75px;
+                height: 75px;
+                top: -38px;
+                left: 25px;
+            }
+
+            .fancy-cloud::after {
+                width: 95px;
+                height: 95px;
+                top: -55px;
+                left: 55px;
+            }
+
+        .bright-sun {
+            position: absolute;
+            top: 1.5rem;
+            left: 4.5rem;
+            width: 85px;
+            height: 85px;
+            background: radial-gradient(circle, #fff385 0%, #f6e05e 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(246, 224, 94, 0.7);
+            z-index: 997;
+            animation: sunPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes sunPulse {
+
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.85;
+            }
+
+            50% {
+                transform: scale(1.06);
+                opacity: 1;
+                box-shadow: 0 0 65px rgba(246, 224, 94, 0.9);
+            }
+        }
+
+        #rainbowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 996;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header-wrapper">
+            <h2><i class="fas fa-random"></i> JSON Formatter & Escape Converter</h2>
+            <button class="theme-toggle" id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+        </div>
+
+        <div class="example-box">
+            <h4><i class="fas fa-info-circle"></i> Contoh Format yang Didukung:</h4>
+            <pre>Input dengan escape: {\r\n    \"rsp\": \"000\",\r\n    \"rspdesc\": \"Success\"\r\n}
+Output JSON valid: {
+    "rsp": "000",
+    "rspdesc": "Success"
+}</pre>
+            <div class="help-text">
+                <i class="fas fa-lightbulb" style="color: #f59e0b;"></i> Paste JSON dengan karakter escape (<code>\r\n</code>, <code>\"</code>, dll) lalu klik "Convert to JSON"
+            </div>
+        </div>
+
+        <div class="area">
+            <div class="area-panel">
+                <h3><i class="fas fa-sign-in-alt"></i> Input JSON</h3>
+                <textarea id="input" placeholder="Paste JSON atau string dengan escape characters di sini..."></textarea>
+            </div>
+            <div class="area-panel">
+                <h3><i class="fas fa-sign-out-alt"></i> Output JSON</h3>
+                <textarea id="output" readonly placeholder="Hasil konversi akan muncul di sini..."></textarea>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-convert" onclick="convertToJSON()"><i class="fas fa-sync-alt"></i> Convert to JSON</button>
+            <button class="btn-format" onclick="formatJSON()"><i class="fas fa-magic"></i> Beautify JSON</button>
+            <button class="btn-minify" onclick="minifyJSON()"><i class="fas fa-box"></i> Minify JSON</button>
+            <button class="btn-copy" onclick="copyJSON()"><i class="fas fa-copy"></i> Copy Output</button>
+            <button class="btn-clear" onclick="clearJSON()"><i class="fas fa-trash-alt"></i> Clear</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+    </div>
+
+    <div id="storm-wrapper" class="yusuf-storm-wrapper">
+        <div class="yusuf-cloud-container">
+            <div class="yusuf-cloud-layer yusuf-cloud-1"></div>
+            <div class="yusuf-cloud-layer yusuf-cloud-2"></div>
+        </div>
+
+        <div id="rain-container" class="yusuf-rain-container"></div>
+
+        <canvas id="lightning-canvas" class="yusuf-lightning-canvas"></canvas>
+    </div>
+
+    <div id="skyScene">
+        <div class="bright-sun"></div>
+        <div class="fancy-cloud"></div>
+        <canvas id="rainbowCanvas"></canvas>
+    </div>
+
+    <div id="moneyRainContainer"></div>
+
+    <div class="root_nama">
+        <button id="openDonateBtn" class="clas_yusuf">
+            ❤️ Donate Center
+        </button>
+    </div>
+
+    <div id="donateModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center;">
+        <div style="background-color: white; color: #333; padding: 2rem; border-radius: 1rem; max-width: 450px; width: 90%; text-align: center; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <span id="closeDonateBtn" style="position: absolute; right: 1.5rem; top: 1rem; font-size: 1.8rem; cursor: pointer; color: #a1a1aa;">&times;</span>
+            <h3 style="margin-top: 0; color: #1e3a8a; font-weight: 700;">Terima Kasih Banyak</h3>
+            <p style="font-style: italic; color: #4b5563; font-size: 1rem; line-height: 1.6;">
+                "Kehadiran Anda adalah energi bagi kami untuk terus berkarya. Terima kasih telah menggunakan aplikasi ini, dan ketulusan hati Anda melalui donasi ini sangat berarti dalam membantu kami menjaga aplikasi ini tetap hidup dan berkembang."
+            </p>
+            <hr style="border: 0; border-top: 2px solid #e5e7eb; margin: 2rem 0;">
+            <p style="font-weight: bold; margin-bottom: 0.75rem; color: #1f2937; font-size: 1.1rem;">Scan Barcode Paypal untuk Berdonasi</p>
+            <div style="background-color: #f3f4f6; padding: 1.5rem; border-radius: 1rem; display: inline-block;">
+                <img src="assets/img/qris-paypal.png" alt="QRIS Yusuf Ibrahim Malik Dev" style=" height: 350px; object-fit: contain; display: block; margin: 0 auto;">
+            </div>
+            <p style="margin-top: 1rem; font-size: 1rem; color: #374151;">Atas Nama: <br><strong style="font-size: 1.25rem; color: #111827;">Yusuf Ibrahim Malik Dev</strong></p>
+        </div>
+    </div>
+    <footer class="yusuf-footer">
+        <div id="ground-cracks" class="yusuf-ground-cracks"></div>
+        <div id="ground-flash" class="yusuf-ground-flash"></div>
+
+        <div class="yusuf-footer-container">
+            <p class="yusuf-copyright-text">
+                &copy; 2026
+                <a href="https://github.com/Yusuf-Ibrahim-Malik-Dev" target="_blank" rel="noopener noreferrer" class="yusuf-storm-trigger">
+                    Yusuf Ibrahim Malik Dev
+                </a>.
+                All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const themeToggle = document.getElementById("themeToggle");
+
+        function showStatus(msg, type) {
+            statusEl.innerHTML = msg;
+            statusEl.className = "status show " + type;
+
+            clearTimeout(statusEl._timeout);
+            if (type !== 'error') {
+                statusEl._timeout = setTimeout(() => {
+                    statusEl.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // ULTIMATE ENGINE: Perbaikan sistem unescape string kompleks, literal bertumpuk, dan penanganan offline total
+        function unescapeString(str) {
+            if (!str) return "";
+            let workingStr = str.trim();
+
+            // Penanganan pembersihan jika string dibungkus tanda kutip luar bawaan serialization sistem luar
+            if (/^"+/.test(workingStr) && /"+$/.test(workingStr) && workingStr.length > 1) {
+                try {
+                    let parsed = JSON.parse(workingStr);
+                    if (typeof parsed === 'string') workingStr = parsed;
+                } catch (e) {
+                    workingStr = workingStr.replace(/^"+|"+$/g, '');
+                }
+            }
+
+            // Ekstraktor Pintar: Jika ada text sampah di luar batas kurung objek/array JSON {} []
+            const startBrace = workingStr.indexOf('{');
+            const startBracket = workingStr.indexOf('[');
+            let startIdx = (startBrace !== -1 && startBracket !== -1) ? Math.min(startBrace, startBracket) : Math.max(startBrace, startBracket);
+
+            if (startIdx > 0) {
+                const lastBrace = workingStr.lastIndexOf('}');
+                const lastBracket = workingStr.lastIndexOf(']');
+                let endIdx = Math.max(lastBrace, lastBracket);
+                if (endIdx > startIdx) {
+                    workingStr = workingStr.substring(startIdx, endIdx + 1);
+                }
+            }
+
+            // Sanitasi komprehensif tanpa merusak struktur internal
+            return workingStr
+                .replace(/\\r\\n/g, '\n')
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '\n')
+                .replace(/\\t/g, '\t')
+                .replace(/\\"/g, '"')
+                .replace(/\\\\/g, '\\');
+        }
+
+        // ULTIMATE ENGINE: Konversi Multi-Layer & Pemulihan Otomatis struktur JSON yang rusak
+        function convertToJSON() {
+            let input = document.getElementById("input").value;
+            if (!input.trim()) {
+                showStatus("<i class='fas fa-exclamation-triangle'></i> Silakan masukkan JSON yang akan dikonversi", "error");
+                return;
+            }
+
+            try {
+                let cleanString = unescapeString(input);
+                let obj;
+
+                // Fase Percobaan Konversi Pertama (Skenario Utama)
+                try {
+                    obj = JSON.parse(cleanString);
+                } catch (e) {
+                    // Skenario Pemulihan Kedua: Bersihkan pembungkus string literal manual jika ada
+                    if (cleanString.startsWith('"') && cleanString.endsWith('"')) {
+                        cleanString = cleanString.substring(1, cleanString.length - 1);
+                    }
+                    // Bersihkan sisa escape ganda pasca pemotongan manual
+                    cleanString = cleanString.replace(/\\"/g, '"');
+                    obj = JSON.parse(cleanString);
+                }
+
+                document.getElementById("output").value = JSON.stringify(obj, null, 4);
+                showStatus("<i class='fas fa-check-circle'></i> Berhasil dikonversi ke JSON valid!", "success");
+            } catch (e) {
+                // Skenario Pemulihan Ketiga: Coba parsing mentah-mentah jika input sebenarnya sudah valid
+                try {
+                    let obj = JSON.parse(input);
+                    document.getElementById("output").value = JSON.stringify(obj, null, 4);
+                    showStatus("<i class='fas fa-check-circle'></i> Berhasil dikonversi ke JSON valid!", "success");
+                } catch (e2) {
+                    // Berikan detail error parsing lokasional untuk membantu debugging pengguna offline
+                    let detailError = e.message;
+                    showStatus("<i class='fas fa-times-circle'></i> <b>Error Parsing:</b> " + detailError + "<br>Pastikan format JSON/string Anda valid.", "error");
+                }
+            }
+        }
+
+        // ULTIMATE ENGINE: Beautify Pintar (Langsung menolak crash jika input rusak, melainkan mengalihkan ke auto-repair)
+        function formatJSON() {
+            let input = document.getElementById("input").value;
+            if (!input.trim()) {
+                showStatus("<i class='fas fa-exclamation-triangle'></i> Input kosong", "error");
+                return;
+            }
+            try {
+                let obj = JSON.parse(input);
+                document.getElementById("output").value = JSON.stringify(obj, null, 4);
+                showStatus("<i class='fas fa-check-circle'></i> JSON Berhasil di-beautify", "success");
+            } catch (e) {
+                // Alihkan otomatis ke perbaikan mesin utama jika format awal tidak murni JSON
+                convertToJSON();
+            }
+        }
+
+        // ULTIMATE ENGINE: Minify Cepat dengan kompresi whitespace aman
+        function minifyJSON() {
+            let input = document.getElementById("input").value;
+            if (!input.trim()) {
+                showStatus("<i class='fas fa-exclamation-triangle'></i> Input kosong", "error");
+                return;
+            }
+            try {
+                let obj;
+                try {
+                    obj = JSON.parse(input);
+                } catch (e) {
+                    let cleanString = unescapeString(input);
+                    obj = JSON.parse(cleanString);
+                }
+                document.getElementById("output").value = JSON.stringify(obj);
+                showStatus("<i class='fas fa-check-circle'></i> JSON Berhasil di-minify", "success");
+            } catch (e) {
+                showStatus("<i class='fas fa-times-circle'></i> JSON Tidak Valid: " + e.message, "error");
+            }
+        }
+
+        function copyJSON() {
+            let out = document.getElementById("output");
+            if (!out.value.trim()) {
+                showStatus("<i class='fas fa-exclamation-triangle'></i> Output masih kosong.", "info");
+                return;
+            }
+            out.select();
+            navigator.clipboard.writeText(out.value).then(() => {
+                showStatus("<i class='fas fa-copy'></i> Output berhasil dicopy ke clipboard!", "success");
+            }).catch(() => {
+                // Fallback jika Clipboard API diblokir kebijakan keamanan lokal peramban
+                try {
+                    document.execCommand("copy");
+                    showStatus("<i class='fas fa-copy'></i> Output berhasil dicopy ke clipboard!", "success");
+                } catch (err) {
+                    showStatus("<i class='fas fa-times-circle'></i> Gagal menyalin secara otomatis.", "error");
+                }
+            });
+        }
+
+        function clearJSON() {
+            document.getElementById("input").value = "";
+            document.getElementById("output").value = "";
+            statusEl.classList.remove('show');
+            showStatus("<i class='fas fa-broom'></i> Semua field sudah dibersihkan", "info");
+        }
+
+        // Listener Event-driven dengan optimalisasi debounce
+        document.getElementById("input").addEventListener('paste', function (e) {
+            setTimeout(() => {
+                convertToJSON();
+            }, 50);
+        });
+
+        document.getElementById("input").addEventListener('input', function (e) {
+            clearTimeout(this._timer);
+            this._timer = setTimeout(() => {
+                if (this.value.trim()) {
+                    convertToJSON();
+                }
+            }, 300);
+        });
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+
+        // Mengarah ke folder lokal assets, bukan CDN cdnjs atau unpkg lagi
+        require.config({
+            paths: {
+                'vs': 'assets/monaco-editor/min/vs'
+            }
+        });
+
+        require(['vs/editor/editor.main'], function () {
+            // Inisialisasi editor monaco lokal Anda di sini
+            window.editor = monaco.editor.create(document.getElementById('input'), {
+                value: "",
+                language: 'json'
+            });
+        });
+
+        // Sistem Inisialisasi Deteksi Awal saat Pemuatan Halaman
+        window.addEventListener('load', function () {
+            if (document.getElementById("input").value.trim()) {
+                convertToJSON();
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // =======================================
+            // ROOT_JAVA_NAMA FUNCTION_YUSUF SYSTEM
+            // =======================================
+            const root_java_nama = {
+                isStorming: false,
+                lightningTimer: null,
+
+                // Fungsi utama inisialisasi cuaca Yusuf
+                function_yusuf: function () {
+                    const trigger = document.querySelector(".yusuf-storm-trigger");
+                    const stormWrapper = document.getElementById("storm-wrapper");
+                    const rainContainer = document.getElementById("rain-container");
+                    const canvas = document.getElementById("lightning-canvas");
+                    const ctx = canvas.getContext("2d");
+                    const groundCracks = document.getElementById("ground-cracks");
+                    const groundFlash = document.getElementById("ground-flash");
+
+                    // Mengatur ukuran canvas layar penuh
+                    function resizeCanvas() {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    window.addEventListener("resize", resizeCanvas);
+                    resizeCanvas();
+
+                    // 1. Sub-fungsi Membuat Hujan
+                    function generateRain() {
+                        rainContainer.innerHTML = "";
+                        const maxDrops = 150;
+                        for (let i = 0; i < maxDrops; i++) {
+                            const drop = document.createElement("div");
+                            drop.classList.add("yusuf-drop");
+                            drop.style.left = `${Math.random() * 100}%`;
+                            drop.style.top = `${Math.random() * -50}px`;
+                            drop.style.animationDuration = `${0.4 + Math.random() * 0.4}s`;
+                            drop.style.animationDelay = `${Math.random() * 1.5}s`;
+                            rainContainer.appendChild(drop);
+                        }
+                    }
+
+                    // 2. Sub-fungsi Menggambar Petir Lengkang-Lengkung (Fractal)
+                    function drawLightningFractal(startX, startY, endX, endY, displace, props) {
+                        if (displace < props.minDisplace) {
+                            ctx.beginPath();
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(endX, endY);
+                            ctx.strokeStyle = props.color;
+                            ctx.lineWidth = props.width;
+                            ctx.shadowBlur = 15;
+                            ctx.shadowColor = "#00fff2";
+                            ctx.stroke();
+                            return;
+                        }
+
+                        const midX = (startX + endX) / 2 + (Math.random() - 0.5) * displace;
+                        const midY = (startY + endY) / 2 + (Math.random() - 0.5) * displace;
+
+                        drawLightningFractal(startX, startY, midX, midY, displace / 2, props);
+                        drawLightningFractal(midX, midY, endX, endY, displace / 2, props);
+
+                        // Membuat sub-cabang kecil liar di udara
+                        if (Math.random() < 0.12 && displace > 10) {
+                            const branchEndX = midX + (Math.random() - 0.5) * 80;
+                            const branchEndY = midY + Math.random() * 60;
+                            drawLightningFractal(midX, midY, branchEndX, branchEndY, displace / 2, {
+                                ...props,
+                                width: props.width * 0.5
+                            });
+                        }
+                    }
+
+                    // 3. Sub-fungsi Pemicu Ledakan Sambaran Petir
+                    const triggerLightningStrike = () => {
+                        if (!root_java_nama.isStorming) return;
+
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        const triggerRect = trigger.getBoundingClientRect();
+                        const startX = Math.random() * canvas.width;
+                        const startY = 40;
+                        const endX = triggerRect.left + (Math.random() * triggerRect.width);
+                        const endY = canvas.height - 90;
+
+                        const properties = {
+                            color: "rgba(235, 255, 255, 1)",
+                            width: 3.5,
+                            minDisplace: 4
+                        };
+
+                        // Gambar kilatan petir
+                        drawLightningFractal(startX, startY, endX, endY, 160, properties);
+
+                        // Aktifkan visual efek sekunder (Guncangan & Retakan Tanah)
+                        stormWrapper.classList.add("ambient-flash");
+                        groundCracks.classList.add("cracks-active");
+                        groundFlash.classList.add("flash-active");
+                        document.body.classList.add("shake-body");
+
+                        // Bersihkan efek instan berkedip
+                        setTimeout(() => {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            stormWrapper.classList.remove("ambient-flash");
+                            document.body.classList.remove("shake-body");
+                        }, 180);
+
+                        setTimeout(() => {
+                            groundCracks.classList.remove("cracks-active");
+                            groundFlash.classList.remove("flash-active");
+                        }, 400);
+
+                        // Set giliran petir acak berikutnya jika kursor masih diam disana
+                        const nextStrike = 1000 + Math.random() * 2000;
+                        root_java_nama.lightningTimer = setTimeout(triggerLightningStrike, nextStrike);
+                    };
+
+                    // =======================================
+                    // EVENT LISTENERS (HOVER CONTROL)
+                    // =======================================
+
+                    // Ketika kursor diam/masuk ke area teks
+                    trigger.addEventListener("mouseenter", () => {
+                        root_java_nama.isStorming = true;
+
+                        // Aktifkan tema badai secara penuh
+                        document.body.classList.add("yusuf-storm-active");
+                        stormWrapper.classList.add("active");
+                        trigger.style.textShadow = "0 0 12px #00fff2, 0 0 25px #00fff2";
+
+                        generateRain();
+
+                        // Petir menyambar perdana setelah kursor diam 600ms
+                        root_java_nama.lightningTimer = setTimeout(triggerLightningStrike, 600);
+                    });
+
+                    // Ketika kursor keluar (Cuaca kembali cerah)
+                    trigger.addEventListener("mouseleave", () => {
+                        root_java_nama.isStorming = false;
+
+                        // Kembalikan ke tema cerah semula
+                        document.body.classList.remove("yusuf-storm-active");
+                        stormWrapper.classList.remove("active");
+                        trigger.style.textShadow = "none";
+
+                        clearTimeout(root_java_nama.lightningTimer);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        // Bersihkan tetesan hujan dari DOM
+                        setTimeout(() => {
+                            if (!root_java_nama.isStorming) rainContainer.innerHTML = "";
+                        }, 600);
+                    });
+                }
+            };
+
+            // Jalankan sistem cuaca Yusuf
+            root_java_nama.function_yusuf();
+        });
+    </script>
+
+
+    <script>
+        const modal = document.getElementById("donateModal");
+        const openBtn = document.getElementById("openDonateBtn");
+        const closeBtn = document.getElementById("closeDonateBtn");
+
+        const moneyRainContainer = document.getElementById("moneyRainContainer");
+        const skyScene = document.getElementById("skyScene");
+        const canvas = document.getElementById("rainbowCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let rainInterval;
+        let animationFrameId;
+
+        // Variabel Kendali Animasi
+        let t = 0;
+        let stickmanDirection = 1; // 1 = Meluncur Turun, -1 = Memanjat Naik, 0 = Diam Sejenak
+        let blinkAlpha = 0.65;
+        let blinkDirection = 0.008; // Transisi kedap-kedip diperhalus pelan
+
+        function getBezierPoint(t, p0, p1, p2) {
+            const x = (1 - t) * (1 - t) * p0.x + 2 * (1 - t) * t * p1.x + t * t * p2.x;
+            const y = (1 - t) * (1 - t) * p0.y + 2 * (1 - t) * t * p1.y + t * t * p2.y;
+            return {
+                x,
+                y
+            };
+        }
+
+        // Menggambar 4 Warna Pelangi Utama Pilihanmu (Merah, Kuning, Hijau, Biru)
+        function drawRainbow(p0, p1, p2) {
+            const customColors = [
+                "rgba(255, 50, 50, ", // Merah
+                "rgba(255, 235, 50, ", // Kuning
+                "rgba(50, 215, 50, ", // Hijau
+                "rgba(50, 130, 255, " // Biru
+            ];
+
+            ctx.save();
+            // Beri efek blur alami agar antar warna membaur natural
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "rgba(255,255,255,0.4)";
+
+            customColors.forEach((color, index) => {
+                ctx.beginPath();
+                ctx.moveTo(p0.x, p0.y);
+                ctx.quadraticCurveTo(p1.x, p1.y, p2.x, p2.y);
+                ctx.strokeStyle = color + blinkAlpha + ")";
+                ctx.lineWidth = 36 - (index * 5); // Ketebalan layer yang proporsional
+                ctx.lineCap = "round";
+                ctx.stroke();
+            });
+            ctx.restore();
+        }
+
+        // Desain Anatomi Stickman Alami & Proporsional
+        function drawStickman(pos, t, dir) {
+            ctx.save();
+            ctx.translate(pos.x, pos.y - 18);
+            ctx.strokeStyle = "#2d3748"; // Warna abu gelap natural
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+
+            let frame = Math.floor(Date.now() / 150) % 4; // Ritme gerakan kaki/tangan lebih lambat
+
+            // KEPALA
+            ctx.beginPath();
+            ctx.arc(0, -18, 5, 0, Math.PI * 2);
+            ctx.fillStyle = "#2d3748";
+            ctx.fill();
+            ctx.stroke();
+
+            // BADAN
+            ctx.beginPath();
+            ctx.moveTo(0, -13);
+            ctx.lineTo(0, 0);
+            ctx.stroke();
+
+            if (dir === 1) { // --- PERJALANAN TURUN ---
+                if (t > 0.15 && t < 0.85) {
+                    // Pose Meluncur (Sliding) Alami
+                    ctx.rotate(-0.25); // Condong rileks ke belakang
+                    // Posisi Kaki selonjoran santai mengikuti arus luncuran
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(10, 4);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(7, 9);
+                    ctx.stroke();
+                    // Tangan diangkat ke atas menikmati seluncuran pelangi
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(-8, -18);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(8, -16);
+                    ctx.stroke();
+                } else {
+                    // Pose Jalan Kaki Normal waktu keluar dari awan / mendarat
+                    let legCycle = frame % 2 === 0 ? 8 : 3;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(-5, 10);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(5, legCycle);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(-4, -2);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(4, -4);
+                    ctx.stroke();
+                }
+            } else { // --- PROSES MEMANJAT NAIK (Dibuat Lambat & Natural) ---
+                ctx.rotate(0.18); // Sedikit merunduk maju ke depan menahan beban tanjakan
+                let climbCycle = frame % 2 === 0;
+                // Langkah kaki memanjat secara bergiliran
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(-6, climbCycle ? 10 : 5);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(4, climbCycle ? 4 : 10);
+                ctx.stroke();
+                // Tangan menggapai ke depan menarik tubuh naik ke atas pelangi
+                ctx.beginPath();
+                ctx.moveTo(0, -10);
+                ctx.lineTo(-10, -6);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, -10);
+                ctx.lineTo(5, -1);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        // Loop Animasi
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            const btnRect = openBtn.getBoundingClientRect();
+
+            const p0 = {
+                x: 110,
+                y: 75
+            };
+            const p2 = {
+                x: btnRect.left + (btnRect.width / 2),
+                y: btnRect.top
+            };
+            const p1 = {
+                x: (p0.x + p2.x) / 1.9,
+                y: -130
+            };
+
+            // Efek Kedap Kedip Natural
+            blinkAlpha += blinkDirection;
+            if (blinkAlpha >= 0.8 || blinkAlpha <= 0.45) blinkDirection = -blinkDirection;
+
+            drawRainbow(p0, p1, p2);
+
+            // Pengaturan Kecepatan Durasi (Dibuat jauh lebih pelan agar natural)
+            if (stickmanDirection === 1) {
+                t += 0.0025; // Kecepatan meluncur turun diperlambat setengahnya
+                if (t >= 1) {
+                    t = 1;
+                    stickmanDirection = 0;
+                    setTimeout(() => {
+                        stickmanDirection = -1;
+                    }, 1200); // Istirahat sejenak di atas tombol
+                }
+            } else if (stickmanDirection === -1) {
+                t -= 0.0018; // Kecepatan memanjat naik dibuat sangat tenang dan realistis
+                if (t <= 0) {
+                    t = 0;
+                    stickmanDirection = 0;
+                    setTimeout(() => {
+                        stickmanDirection = 1;
+                    }, 600); // Jeda sebelum keluar awan kembali
+                }
+            }
+
+            const currentPos = getBezierPoint(t, p0, p1, p2);
+
+            if (stickmanDirection !== 0 || t > 0) {
+                drawStickman(currentPos, t, stickmanDirection === 0 ? -1 : stickmanDirection);
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function createMoney() {
+            const paperMoney = ['💵', '💸'];
+            const coins = ['🪙'];
+            const isCoin = Math.random() > 0.5;
+            const item = document.createElement("div");
+            item.classList.add("money-item");
+
+            if (isCoin) {
+                item.innerText = coins[Math.floor(Math.random() * coins.length)];
+                item.classList.add("coin-animation");
+                item.style.fontSize = (Math.random() * 12 + 16) + 'px';
+            } else {
+                item.innerText = paperMoney[Math.floor(Math.random() * paperMoney.length)];
+                item.classList.add("bill-animation");
+                item.style.fontSize = (Math.random() * 16 + 22) + 'px';
+            }
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
+
+            moneyRainContainer.appendChild(item);
+            setTimeout(() => {
+                item.remove();
+            }, 4000);
+        }
+
+        // HOVER
+        openBtn.addEventListener("mouseenter", () => {
+            skyScene.style.display = "block";
+            moneyRainContainer.style.display = "block";
+            t = 0;
+            stickmanDirection = 1;
+            animate();
+            rainInterval = setInterval(createMoney, 50);
+        });
+
+        openBtn.addEventListener("mouseleave", () => {
+            cancelAnimationFrame(animationFrameId);
+            clearInterval(rainInterval);
+            skyScene.style.display = "none";
+            moneyRainContainer.style.display = "none";
+            moneyRainContainer.innerHTML = '';
+        });
+
+        openBtn.onclick = function () {
+            modal.style.display = "flex";
+            cancelAnimationFrame(animationFrameId);
+            clearInterval(rainInterval);
+            skyScene.style.display = "none";
+            moneyRainContainer.style.display = "none";
+        }
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
