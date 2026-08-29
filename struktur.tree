@@ -1,0 +1,10 @@
+Convert-String-To-Json/
+├── assets/
+│   ├── css/
+│   │   └── all.min.css
+│   └── webfonts/          <-- Sangat penting untuk font awesome asli
+│       ├── fa-brands-400.woff2
+│       ├── fa-regular-400.woff2
+│       └── fa-solid-900.woff2
+├── index.html             <-- File HTML Anda (ganti nama dari Convert String...)
+└── setup-assets.js        <-- Skrip Node.js di bawah ini
