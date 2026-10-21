@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C2D34B1-77E2-4E18-8C41-6A6C2E8A9D30}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ConvertStringToJson</RootNamespace>
+    <AssemblyName>ConvertStringToJson</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIIS>False</UseIIS>
+    <UseIISExpress>True</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>bin\</OutputPath><DefineConstants>DEBUG;TRACE</DefineConstants><WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType><Optimize>true</Optimize><OutputPath>bin\</OutputPath><DefineConstants>TRACE</DefineConstants><WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" /><Reference Include="System.Core" /><Reference Include="System.Web" /><Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="struktur.tree" />
+    <Content Include="Default.aspx" />
+    <Content Include="setup-assets.js" />
+    <Content Include="Web.config" />
+    <Content Include="assets\img\qris-paypal.png" />
+    <Content Include="assets\img\qris-bca-barcode.png" />
+    <Content Include="assets\webfonts\fa-regular-400.woff2" />
+    <Content Include="assets\webfonts\fa-solid-900.woff2" />
+    <Content Include="assets\css\all.min.css" />
+    <Content Include="assets\monaco-editor\min\vs\bicep-DF5aW17k.js" />
+    <Content Include="assets\monaco-editor\min\vs\razor-BYAHOTkz.js" />
+    <Content Include="assets\monaco-editor\min\vs\handlebars-OwglfO-1.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.cs.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\xml-CdsdnY8S.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.ja.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\monaco.contribution-DO3azKX8.js" />
+    <Content Include="assets\monaco-editor\min\vs\scala-foMgrKo1.js" />
+    <Content Include="assets\monaco-editor\min\vs\php-D_kh-9LK.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.it.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\powershell-B-7ap1zc.js" />
+    <Content Include="assets\monaco-editor\min\vs\objective-c-CntZFaHX.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.tr.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\redis-fvZQY4PI.js" />
+    <Content Include="assets\monaco-editor\min\vs\cypher-DVThT8BS.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.zh-cn.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\java-CI4ZMsH9.js" />
+    <Content Include="assets\monaco-editor\min\vs\freemarker2-Cz_sV6Md.js" />
+    <Content Include="assets\monaco-editor\min\vs\redshift-45Et0LQi.js" />
+    <Content Include="assets\monaco-editor\min\vs\pla-VfZjczW0.js" />
+    <Content Include="assets\monaco-editor\min\vs\pascaligo-BiXoTmXh.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.pl.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\less-C0eDYdqa.js" />
+    <Content Include="assets\monaco-editor\min\vs\monaco.contribution-D2OdxNBt.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.pt-br.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\ruby-CZO8zYTz.js" />
+    <Content Include="assets\monaco-editor\min\vs\cameligo-plsz8qhj.js" />
+    <Content Include="assets\monaco-editor\min\vs\pgsql-me_jFXeX.js" />
+    <Content Include="assets\monaco-editor\min\vs\fsharp-BOMdg4U1.js" />
+    <Content Include="assets\monaco-editor\min\vs\abap-D-t0cyap.js" />
+    <Content Include="assets\monaco-editor\min\vs\systemverilog-Ch4vA8Yt.js" />
+    <Content Include="assets\monaco-editor\min\vs\htmlMode-Bz67EXwp.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.ko.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\perl-DABw_TcH.js" />
+    <Content Include="assets\monaco-editor\min\vs\restructuredtext-C7UUFKFD.js" />
+    <Content Include="assets\monaco-editor\min\vs\workers-DcJshg-q.js" />
+    <Content Include="assets\monaco-editor\min\vs\markdown-C_rD0bIw.js" />
+    <Content Include="assets\monaco-editor\min\vs\tcl-D74tq1nH.js" />
+    <Content Include="assets\monaco-editor\min\vs\kotlin-IUYPiTV8.js" />
+    <Content Include="assets\monaco-editor\min\vs\clojure-Y2auQMzK.js" />
+    <Content Include="assets\monaco-editor\min\vs\pascal-r6kuqfl_.js" />
+    <Content Include="assets\monaco-editor\min\vs\ecl-30fUercY.js" />
+    <Content Include="assets\monaco-editor\min\vs\powerquery-Dt-g_2cc.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.de.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\julia-BwzEvaQw.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages-loader.js" />
+    <Content Include="assets\monaco-editor\min\vs\_commonjsHelpers-CT9FvmAN.js" />
+    <Content Include="assets\monaco-editor\min\vs\lspLanguageFeatures-kM9O9rjY.js" />
+    <Content Include="assets\monaco-editor\min\vs\wgsl-BhLXMOR0.js" />
+    <Content Include="assets\monaco-editor\min\vs\cpp-CkKPQIni.js" />
+    <Content Include="assets\monaco-editor\min\vs\editor.api-CalNCsUg.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.zh-tw.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\qsharp-BzsFaUU9.js" />
+    <Content Include="assets\monaco-editor\min\vs\flow9-DqtmStfK.js" />
+    <Content Include="assets\monaco-editor\min\vs\bat-C397hTD6.js" />
+    <Content Include="assets\monaco-editor\min\vs\vb-Dyb2648j.js" />
+    <Content Include="assets\monaco-editor\min\vs\typespec-D-PIh9Xw.js" />
+    <Content Include="assets\monaco-editor\min\vs\loader.js" />
+    <Content Include="assets\monaco-editor\min\vs\scheme-CHdMtr7p.js" />
+    <Content Include="assets\monaco-editor\min\vs\m3-CsR4AuFi.js" />
+    <Content Include="assets\monaco-editor\min\vs\mysql-CdtbpvbG.js" />
+    <Content Include="assets\monaco-editor\min\vs\apex-CcIm7xu6.js" />
+    <Content Include="assets\monaco-editor\min\vs\pug-BRpRNeEb.js" />
+    <Content Include="assets\monaco-editor\min\vs\ini-CsNwO04R.js" />
+    <Content Include="assets\monaco-editor\min\vs\jsonMode-DULH5oaX.js" />
+    <Content Include="assets\monaco-editor\min\vs\postiats-BBSzz8Pk.js" />
+    <Content Include="assets\monaco-editor\min\vs\st-CuDFIVZ_.js" />
+    <Content Include="assets\monaco-editor\min\vs\rust-Bfetafyc.js" />
+    <Content Include="assets\monaco-editor\min\vs\hcl-DTaboeZW.js" />
+    <Content Include="assets\monaco-editor\min\vs\protobuf-BmtuEB1A.js" />
+    <Content Include="assets\monaco-editor\min\vs\javascript-PczUCGdz.js" />
+    <Content Include="assets\monaco-editor\min\vs\go-D_hbi-Jt.js" />
+    <Content Include="assets\monaco-editor\min\vs\monaco.contribution-qLAYrEOP.js" />
+    <Content Include="assets\monaco-editor\min\vs\elixir-xjPaIfzF.js" />
+    <Content Include="assets\monaco-editor\min\vs\html-Pa1xEWsY.js" />
+    <Content Include="assets\monaco-editor\min\vs\msdax-C38-sJlp.js" />
+    <Content Include="assets\monaco-editor\min\vs\csp-D8uWnyxW.js" />
+    <Content Include="assets\monaco-editor\min\vs\shell-ClXCKCEW.js" />
+    <Content Include="assets\monaco-editor\min\vs\swift-n-2HociN.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.es.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\solidity-MZ6ExpPy.js" />
+    <Content Include="assets\monaco-editor\min\vs\typescript-DfOrAzoV.js" />
+    <Content Include="assets\monaco-editor\min\vs\sophia-DWkuSsPQ.js" />
+    <Content Include="assets\monaco-editor\min\vs\scss-C1cmLt9V.js" />
+    <Content Include="assets\monaco-editor\min\vs\mdx-DEWtB1K5.js" />
+    <Content Include="assets\monaco-editor\min\vs\dockerfile-CZqqYdch.js" />
+    <Content Include="assets\monaco-editor\min\vs\python-Cr0UkIbn.js" />
+    <Content Include="assets\monaco-editor\min\vs\azcli-BA0tQDCg.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.fr.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\graphql-CKUU4kLG.js" />
+    <Content Include="assets\monaco-editor\min\vs\nls.messages.ru.js.js" />
+    <Content Include="assets\monaco-editor\min\vs\cssMode-CjiAH6dQ.js" />
+    <Content Include="assets\monaco-editor\min\vs\monaco.contribution-EcChJV6a.js" />
+    <Content Include="assets\monaco-editor\min\vs\coffee-Bu45yuWE.js" />
+    <Content Include="assets\monaco-editor\min\vs\sql-32GpJSV2.js" />
+    <Content Include="assets\monaco-editor\min\vs\twig-C6taOxMV.js" />
+    <Content Include="assets\monaco-editor\min\vs\mips-CiYP61RB.js" />
+    <Content Include="assets\monaco-editor\min\vs\css-CaeNmE3S.js" />
+    <Content Include="assets\monaco-editor\min\vs\lua-DtygF91M.js" />
+    <Content Include="assets\monaco-editor\min\vs\tsMode-CZz1Umrk.js" />
+    <Content Include="assets\monaco-editor\min\vs\yaml-DYGvmE88.js" />
+    <Content Include="assets\monaco-editor\min\vs\sparql-AUGFYSyk.js" />
+    <Content Include="assets\monaco-editor\min\vs\dart-CmGfCvrO.js" />
+    <Content Include="assets\monaco-editor\min\vs\sb-3GYllVck.js" />
+    <Content Include="assets\monaco-editor\min\vs\lexon-iON-Kj97.js" />
+    <Content Include="assets\monaco-editor\min\vs\liquid-DqKjdPGy.js" />
+    <Content Include="assets\monaco-editor\min\vs\r-f8dDdrp4.js" />
+    <Content Include="assets\monaco-editor\min\vs\csharp-CX28MZyh.js" />
+    <Content Include="assets\monaco-editor\min\vs\basic-languages\monaco.contribution.js" />
+    <Content Include="assets\monaco-editor\min\vs\assets\editor.worker-Be8ye1pW.js" />
+    <Content Include="assets\monaco-editor\min\vs\assets\json.worker-DKiEKt88.js" />
+    <Content Include="assets\monaco-editor\min\vs\assets\ts.worker-CMbG-7ft.js" />
+    <Content Include="assets\monaco-editor\min\vs\assets\html.worker-B51mlPHg.js" />
+    <Content Include="assets\monaco-editor\min\vs\assets\css.worker-HnVq6Ewq.js" />
+    <Content Include="assets\monaco-editor\min\vs\editor\editor.main.js" />
+    <Content Include="assets\monaco-editor\min\vs\editor\editor.main.css" />
+    <Content Include="assets\monaco-editor\min\vs\editor\editor.main.min.css" />
+    <Content Include="assets\monaco-editor\min\vs\language\typescript\monaco.contribution.js" />
+    <Content Include="assets\monaco-editor\min\vs\language\html\monaco.contribution.js" />
+    <Content Include="assets\monaco-editor\min\vs\language\json\monaco.contribution.js" />
+    <Content Include="assets\monaco-editor\min\vs\language\css\monaco.contribution.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs"><DependentUpon>Default.aspx</DependentUpon></Compile>
+    <Compile Include="Default.aspx.designer.cs"><DependentUpon>Default.aspx</DependentUpon></Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != '' And Exists('$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio><FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+      <WebProjectProperties><UseIIS>False</UseIIS><AutoAssignPort>True</AutoAssignPort><DevelopmentServerPort>5000</DevelopmentServerPort><DevelopmentServerVPath>/</DevelopmentServerVPath><IISUrl>http://localhost:5000/</IISUrl><NTLMAuthentication>False</NTLMAuthentication><UseCustomServer>False</UseCustomServer><CustomServerUrl></CustomServerUrl><SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile></WebProjectProperties>
+    </FlavorProperties></VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,5 @@
+C:\Users\Admin\Desktop\ConvertStringToJson_ASPX_NET48\ConvertStringToJson\bin\ConvertStringToJson.dll
+C:\Users\Admin\Desktop\ConvertStringToJson_ASPX_NET48\ConvertStringToJson\bin\ConvertStringToJson.pdb
+C:\Users\Admin\Desktop\ConvertStringToJson_ASPX_NET48\ConvertStringToJson\obj\Debug\ConvertStringToJson.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\ConvertStringToJson_ASPX_NET48\ConvertStringToJson\obj\Debug\ConvertStringToJson.dll
+C:\Users\Admin\Desktop\ConvertStringToJson_ASPX_NET48\ConvertStringToJson\obj\Debug\ConvertStringToJson.pdb
