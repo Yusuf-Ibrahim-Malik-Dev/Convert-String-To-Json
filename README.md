@@ -1,6 +1,6 @@
 # Convert-String-To-Json
 
-Url: https://yusuf-ibrahim-malik-dev.github.io/Convert-String-To-Json/
+Url: https://yusuf-ibrahim-malik-dev.github.io/Convert-String-To-Json/publish/
 
 untuk merapihkan code berantakan
 
